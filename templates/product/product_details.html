@@ -8,9 +8,25 @@
 <li>{{product.pub_date}}</li>
 
 <hr/>
+
 <button>Add to cart</button>
 <button>Checkout</button>
 <hr/>
+
+<h3>Comments</h3>
+
+{% for comment in comments %}
+		<li> {{ comment.title }} </li>
+		<p> {{comment.content}} </p>
+		
+{% endfor %}
+
+<form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+
 <p><a href="{{request.META.HTTP_REFERER}}"">Get back</a></p>
 
 {% endblock content %}

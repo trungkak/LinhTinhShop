@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from .models import Product, Category
+from .models import Product, Category, Comment
 # Create your views here.
 
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -21,31 +21,26 @@ def home(request):
 
 	return render(request, template, {})
 
-
-def list_products(request):
-	template = 'product/list_products.html'
-
-	products = Product.objects.all()
-	categories = Category.objects.all()
-
-	context = {'products' : products,
-				'categories' : categories
-			}
-
-	return render(request, template, context)
-
-
 def list_products_categories(request, param):
 
 	template = 'product/list_products_categories.html'
 
 	categories = Category.objects.all()
+	category_this = None
 
-	category_this = Category.objects.get(slug=param)
+	if param == 'all':
+		products = Product.objects.all()
+	else:
 
+		category_this = Category.objects.get(slug=param)
+
+		products = category_this.get_products()
+
+	
 	context = {
 		'categories' : categories,
-		'category_this': category_this
+		'category_this': category_this,
+		'products' : products
 	}
 
 	return render(request, template, context)
@@ -56,7 +51,18 @@ def product_details(request, param):
 	id = param.split('/')[0]
 
 	product = Product.objects.get(pk=id)
-	context = {'product' : product}
+
+	comments = product.get_comments()
+
+	form = CommentForm(request.POST)
+	if form.is_valid():
+		comment = form.save(commit=False)
+		comment.product = product
+		comment.save()
+	else:
+		form = CommentForm()
+
+	context = {'product' : product, 'comments' : comments, 'form' : form}
 	return render(request, template, context)
 
 

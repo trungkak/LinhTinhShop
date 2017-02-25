@@ -5,7 +5,7 @@
 <div class="btn-group">
 
 	<button type="button" class="btn btn-primary" 
-  			onclick="window.location.href='{% url 'list_products' %}'" >All products</button>
+  			onclick="window.location.href='{% url 'list_products_categories' 'all' %}'" >All products</button>
 
 	{% for category in categories %}
   		<button type="button" class="btn btn-primary" 
@@ -15,10 +15,11 @@
 
 <br><br>
 
-{% for product in category_this.get_products %}
+{% for product in products %}
 
 	<li><a href="{% url 'product_details' product.get_absolute_url %}">{{ product.name }}</a></li>
 	<p>{{product.description}}</p>
+
 	<button>Add to cart</button>
 	<button>Checkout</button>
 	<hr/>

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 from datetime import datetime
 
 from django.template.defaultfilters import slugify
@@ -22,6 +23,9 @@ class Product(models.Model):
 
 	def get_absolute_url(self):
 		return  str(self.id) + '/' + str(self.slug)
+
+	def get_comments(self):
+		return Comment.objects.filter(product=self)
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.name)
@@ -50,6 +54,13 @@ class Category(models.Model):
 		self.slug = slugify(self.name)
 		super(Category, self).save(*args, **kwargs)
 
+class Comment(models.Model):
+	title = models.CharField(max_length=100)
+	content = models.TextField()
+	product = models.ForeignKey('Product', related_name='product')
+	
+	def get_absolute_url(self):
+		return self.product.get_absolute_url + '/comments/' + str(self.id)
 
-
-
+	def __unicode__(self):
+		return self.title

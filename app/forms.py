@@ -3,7 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, ButtonHolder, Submit
-
+from django import forms
+from .models import Comment
 
 class RegistrationForm(UserCreationForm):
 
@@ -15,7 +16,6 @@ class RegistrationForm(UserCreationForm):
 			'username',
 			'password1',
 			'password2',
-			'country',
 			ButtonHolder (
 				Submit('register', 'Register', css_class='btn-primary')
 			)
@@ -35,3 +35,9 @@ class LoginForm(AuthenticationForm):
 				Submit('login', 'Login', css_class='btn-success')
 			)
 		)
+
+class CommentForm(forms.ModelForm):
+
+	class Meta:
+		model = Comment
+		fields = ('title', 'content',)
