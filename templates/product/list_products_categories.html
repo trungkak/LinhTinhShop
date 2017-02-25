@@ -1,15 +1,28 @@
+{% extends 'layouts/base.html' %}
 
 
+{% block content %}
 <div class="btn-group">
+
+	<button type="button" class="btn btn-primary" 
+  			onclick="window.location.href='{% url 'list_products' %}'" >All products</button>
+
 	{% for category in categories %}
   		<button type="button" class="btn btn-primary" 
   			onclick="window.location.href='{% url 'list_products_categories' category.slug %}'" >{{category.name}}</button>
   	{% endfor %}
 </div>
 
+<br><br>
+
 {% for product in category_this.get_products %}
 
 	<li><a href="{% url 'product_details' product.get_absolute_url %}">{{ product.name }}</a></li>
 	<p>{{product.description}}</p>
+	<button>Add to cart</button>
+	<button>Checkout</button>
+	<hr/>
 
 {% endfor %}
+
+{% endblock content %}
