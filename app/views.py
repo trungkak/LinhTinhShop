@@ -76,8 +76,7 @@ class SignUpView(
 	model = User
 	template_name = 'accounts/signup.html'
 
-	def get_success_url(self):
-		return reverse('home')
+	success_url = reverse_lazy('home')
 
 class LoginView(
 	views.AnonymousRequiredMixin,
@@ -88,6 +87,9 @@ class LoginView(
 	form_valid_message = 'You\'re logged in now'
 	success_url = reverse_lazy('home')
 	template_name = 'accounts/login.html'
+
+	# def get_success_url(self):
+	# 	return reverse_lazy(self.request.path)
 
 	def form_valid(self, form):
 		username = form.cleaned_data['username']

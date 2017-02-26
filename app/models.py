@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from datetime import datetime
 
 from django.template.defaultfilters import slugify
@@ -58,9 +58,15 @@ class Comment(models.Model):
 	title = models.CharField(max_length=100)
 	content = models.TextField()
 	product = models.ForeignKey('Product', related_name='product')
-	
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user', null=True)
+
 	def get_absolute_url(self):
 		return self.product.get_absolute_url + '/comments/' + str(self.id)
 
 	def __unicode__(self):
 		return self.title
+
+
+
+
+

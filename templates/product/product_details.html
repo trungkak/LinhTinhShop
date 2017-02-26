@@ -18,10 +18,15 @@
 {% for comment in comments %}
 		<li> {{ comment.title }} </li>
 		<p> {{comment.content}} </p>
+		Posted by: {{ user.username }}
 		
 {% endfor %}
 
-{% crispy form %}
+{% if user.is_authenticated %}
+	{% crispy form %}
+{% else %}
+<h4>Login to post a comment</h4>
+{% endif %}
 
 <!-- <form method="POST" class="post-form">{% csrf_token %}
         {% crispy form %}
