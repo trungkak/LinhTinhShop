@@ -14,7 +14,7 @@
 </div>
 
 <br><br>
-
+	
 {% for product in products %}
 
 	<li><a href="{% url 'product_details' product.get_absolute_url %}">{{ product.name }}</a></li>

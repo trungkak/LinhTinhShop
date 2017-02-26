@@ -65,6 +65,14 @@ def product_details(request, param):
 	context = {'product' : product, 'comments' : comments, 'form' : form}
 	return render(request, template, context)
 
+def shopping_cart(request):
+	cart = request.session.get('cart', {})
+
+def add_to_cart(request, product_id, quantity):
+	cart = request.session.get('cart', {})
+	cart[product_id] = quantity
+	request.session['cart'] = cart
+
 
 class SignUpView(
 	views.AnonymousRequiredMixin,
