@@ -38,6 +38,18 @@ class LoginForm(AuthenticationForm):
 
 class CommentForm(forms.ModelForm):
 
+	def __init__(self, *args, **kwargs):
+		super(CommentForm, self).__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.layout = Layout (
+			'title',
+			'content',
+			ButtonHolder(
+				Submit('send', 'Send', css_class='btn-success')
+			)
+		)
+
+
 	class Meta:
 		model = Comment
 		fields = ('title', 'content',)

@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h3>{{product.name}}</h3>
@@ -21,10 +21,12 @@
 		
 {% endfor %}
 
-<form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+{% crispy form %}
+
+<!-- <form method="POST" class="post-form">{% csrf_token %}
+        {% crispy form %}
         <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+    </form> -->
 
 
 <p><a href="{{request.META.HTTP_REFERER}}"">Get back</a></p>
