@@ -1,59 +1,121 @@
 <!DOCTYPE>
 <html>
+
 <head>
-    <title>{% block title %}PyCon Survival Guide{% endblock title %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <style>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/customcss/nav.css' %}">
+
+    <link href="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/timber.scss.css?4775145912400741764" rel="stylesheet" type="text/css" media="all" />
+      <link href="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/theme.scss.css?4775145912400741764" rel="stylesheet" type="text/css" media="all" />
+
+      <style type="text/css">
+          #maincontent {
+            margin-top: 100px;
+          }
+    
+        .navbar-brand {
+          padding: 0px; /* firefox bug fix */
+        }
+        .navbar-brand>img {
+          height: 120%;
+          padding: 0px; /* firefox bug fix */
+          width: auto;
+        }
+
+        .container {
+            width: 70%;
+            background: #FFF url(picture.jpg) no-repeat center top;
+            margin: 0 auto;
+            height:120% auto;
+        }
+
+        #main-content {
+            padding: 20px;
+        }
+
         body {
-            padding-bottom: 20px;
-            padding-top: 70px;
+            margin-top: 2cm;
+            background: url({% static 'img/bg.jpg' %});
+            font-family: Lato;
         }
-        .messages {
-            list-style: none;
-        }
-    </style>
+
+      </style>
+      
+
     {% block css %}{% endblock css %}
 </head>
-<body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">PyCon Survival Guide</a>
+<body>
+    <nav class="navbar navbar-findcond navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="{% url 'home' %}">
+                        <img src="{% static 'img/icons/icon.png' %}" alt=""/>
+                </a>
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="active"><a href="{% url 'list_products_categories' 'all' %}">Products <span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="#">Contact us <span class="sr-only">(current)</span></a></li>
+                </ul>
+
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Items <span class="badge">0</span></a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> sayfası <span class="badge">Video</span> sayfasında etiketlendi</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasında iletiniz beğenildi</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Video</span> sayfasında iletiniz beğenildi</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> sayfasında iletiniz beğenildi</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- <li class="active"><a href="#">Ana Sayfa <span class="sr-only">(current)</span></a></li> -->
+
+                    {% if not user.is_authenticated %}
+                        <li class="active"><a href="{% url 'register' %}">Register<span class="sr-only">(current)</span></a></li>
+                        
+                        <li class="active"><a href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a></li>
+
+                    {% else %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {{user.username}} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">My profile</a></li>
+                                <li><a href="#">Change password</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+                <form class="navbar-form navbar-right search-form" role="search">
+                    <input type="text" class="form-control" placeholder="Search" />
+                </form>
+            </div>
         </div>
-        <div class="navbar-collapse collapse">
-            {% if not user.is_authenticated %}
-            <a href="{% url 'register' %}" class="btn btn-default navbar-btn">Register</a>
-            <a href="{% url 'login' %}" class="btn btn-default navbar-btn">Login</a>
-            {% else %}
-            <a href="{% url 'logout' %}" class="btn btn-default navbar-btn">Logout</a>
-            {% endif %}
-        </div><!--/.navbar-collapse -->
-      </div>
-    </div>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <div class="jumbotron">
-        <div class="container">{% block headline %}{% endblock headline %}</div>
-    </div>
+    </nav>
+
     <div class="container">
-        {% block content %}{% endblock content %}
+        <div id="main-content">
+            {% block content %}{% endblock content %}
+        </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     {% block js %}{% endblock js %}
 </body>
+
 </html>

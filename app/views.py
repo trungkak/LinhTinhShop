@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Product, Category, Comment
 # Create your views here.
 
@@ -16,6 +17,11 @@ from django.core.urlresolvers import reverse_lazy
 from braces import views
 
 
+def test_view(request):
+	template = 'layouts/test.html'
+
+	return render(request, template, {})
+
 def home(request):
 	template='layouts/home.html'
 
@@ -31,12 +37,10 @@ def list_products_categories(request, param):
 	if param == 'all':
 		products = Product.objects.all()
 	else:
-
 		category_this = Category.objects.get(slug=param)
 
 		products = category_this.get_products()
 
-	
 	context = {
 		'categories' : categories,
 		'category_this': category_this,

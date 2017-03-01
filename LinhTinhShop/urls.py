@@ -25,4 +25,6 @@ urlpatterns = [
     url(r'^accounts/register/$', views.SignUpView.as_view(), name='register'),
     url(r'^accounts/login/$', views.LoginView.as_view(), name='login'),
     url(r'^accounts/logout/$', views.logout_view, name='logout'),
+    url(r'^testview/$', views.test_view, name='testview'),
+    #url(r'^markdown/', django_markdown.urls),
 ]

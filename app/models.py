@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
 from datetime import datetime
+#from django_markdown.models import MarkdownField
 
 from django.template.defaultfilters import slugify
 
@@ -15,7 +16,7 @@ class Product(models.Model):
 	manufacturer = models.CharField(max_length=100, blank=True)
 	description = models.TextField()
 
-	photo = models.ImageField(upload_to='product_photo', blank=True)
+	photo = models.ImageField(upload_to='static/img/book_photos', blank=True)
 	pub_date = models.DateTimeField(default=datetime.now)
 
 	def __unicode__(self):
