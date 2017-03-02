@@ -15,6 +15,12 @@
     <link href="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/timber.scss.css?4775145912400741764" rel="stylesheet" type="text/css" media="all" />
       <link href="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/theme.scss.css?4775145912400741764" rel="stylesheet" type="text/css" media="all" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- <script src="{% static 'js/page.js' %}"></script> -->
+
+
+
       <style type="text/css">
           #maincontent {
             margin-top: 100px;
@@ -76,13 +82,22 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Items <span class="badge">0</span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Items <span class="badge"> {{ num_items }} </span></a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> sayfası <span class="badge">Video</span> sayfasında etiketlendi</a></li>
-                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasında iletiniz beğenildi</a></li>
-                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Video</span> sayfasında iletiniz beğenildi</a></li>
-                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> sayfasında iletiniz beğenildi</a></li>
+                            <!-- <li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> sayfası <span class="badge">Video</span> sayfasında etiketlendi</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasında iletiniz beğenildi</a></li> -->
+                            <!-- <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Video</span> sayfasında iletiniz beğenildi</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> sayfasında iletiniz beğenildi</a></li> -->
+
+                            {% for attr in attrs %}
+
+                                <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> {{attr}} </a></li>
+
+                            {% endfor %}
+
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> Clear cart </a></li>
                         </ul>
                     </li>
                     

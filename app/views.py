@@ -23,6 +23,8 @@ def test_view(request):
 	return render(request, template, {})
 
 def home(request):
+	num = len(request.session.get('cart', {}))
+
 	template='layouts/home.html'
 
 	return render(request, template, {})
@@ -69,13 +71,15 @@ def product_details(request, param):
 	context = {'product' : product, 'comments' : comments, 'form' : form}
 	return render(request, template, context)
 
-def shopping_cart(request):
-	cart = request.session.get('cart', {})
+def add_to_cart(request):
+	
+	if request.method == 'GET':
+		cart = request.session.get('cart', [])
+		product_id = str(request.GET['product_id'])
+		cart.append(product_id)
+		request.session['cart'] = cart
 
-def add_to_cart(request, product_id, quantity):
-	cart = request.session.get('cart', {})
-	cart[product_id] = quantity
-	request.session['cart'] = cart
+	return HttpResponseRedirect(request.path)
 
 
 class SignUpView(

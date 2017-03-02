@@ -32,6 +32,10 @@ class Product(models.Model):
 		self.slug = slugify(self.name)
 		super(Product, self).save(*args, **kwargs)
 
+	# def get_object_attr(self, pk, attr):
+	# 	obj_attr = getattr(self.objects.get(pk=int(pk)), attr)
+	# 	return obj_attr
+
 class Category(models.Model):
 	name = models.CharField(max_length=100)
 	slug = models.SlugField(max_length=150, blank=True)
