@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^accounts/logout/$', views.logout_view, name='logout'),
     url(r'^testview/$', views.test_view, name='testview'),
     #url(r'^markdown/', django_markdown.urls),
-    url(r'^add/cart/$', views.add_to_cart, name='add_to_cart'),
+    url(r'^cart/add/$', views.add_to_cart, name='add_to_cart'),
+    url(r'^cart/clear/$', views.clear_cart, name='clear_cart'),
 ]

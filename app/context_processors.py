@@ -6,13 +6,15 @@ def session_url(request):
 
     num = len(sess)
 
-    attrs = []
+    objs = []
 
     for item in sess:
-    	object_attr = getattr(Product.objects.get(pk=item), 'name')
-    	attrs.append(object_attr)
+    	# name = getattr(Product.objects.get(pk=item), 'name')
+    	obj = Product.objects.get(pk=item)
+    	objs.append(obj)
 
-    return {'num_items':num, 'attrs': attrs}
+
+    return {'num_items':num, 'objs': objs}
 
 
 

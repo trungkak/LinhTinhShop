@@ -19,7 +19,21 @@
 
     <!-- <script src="{% static 'js/page.js' %}"></script> -->
 
+    <script type="text/javascript">
 
+        $(document).ready(function() {
+
+            $("#clear_cart").click(function() {
+                v$.get(
+                    "{% url 'clear_cart' %}", 
+                    {},
+                    function(data) {
+
+                    });
+            });
+        })
+
+    </script>
 
       <style type="text/css">
           #maincontent {
@@ -42,8 +56,18 @@
             height:120% auto;
         }
 
+        #main-container {
+                border-radius: 25px;
+                border: 2px solid #73AD21;
+            }
+
         #main-content {
             padding: 20px;
+        }
+
+        #cart_img {
+            height: 20px;
+            width: 20px;
         }
 
         body {
@@ -82,22 +106,24 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Items <span class="badge"> {{ num_items }} </span></a>
-
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></i> Items <span class="badge" id="NumItems" > {{ num_items }} </span></a>
+                    
                         <ul class="dropdown-menu" role="menu">
                             <!-- <li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> sayfası <span class="badge">Video</span> sayfasında etiketlendi</a></li>
                             <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasında iletiniz beğenildi</a></li> -->
                             <!-- <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Video</span> sayfasında iletiniz beğenildi</a></li>
                             <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> sayfasında iletiniz beğenildi</a></li> -->
 
-                            {% for attr in attrs %}
+                            {% for obj in objs %}
 
-                                <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> {{attr}} </a></li>
+                                <li><a href="{% url 'product_details' obj.get_absolute_url %}"></i> <img id="cart_img" src="/{{obj.photo.url}}"><!-- <span class="badge">1</span> --> {{ obj.name }} </a></li>
 
                             {% endfor %}
 
                             <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> Clear cart </a></li>
+                            <li><a href="#"></i> Checkout </a></li>
+                            <li class="divider"></li>
+                            <li><a href=""></i> Clear cart </a></li>
                         </ul>
                     </li>
                     
@@ -112,8 +138,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {{user.username}} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">My profile</a></li>
-                                <li><a href="#">Change password</a></li>
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Cart</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{% url 'logout' %}">Logout</a></li>
                             </ul>
@@ -127,7 +153,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="main-container">
         <div id="main-content">
             {% block content %}{% endblock content %}
         </div>

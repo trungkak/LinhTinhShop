@@ -1,5 +1,30 @@
 {% extends 'layouts/base.html' %}
 
+{% load static %}
+{% block css %}
+<style type="text/css">
+	
+	#home_img {
+            height: 100%;
+            width: 100%;
+            border-radius: 25px;
+        }
 
+
+</style>
+
+{% endblock css %}
 {% block content %}
+
+<div class="text-center"><h2>Welcome to Book House, where our products will sactisfy you ! </h2></div>
+
+<br>	
+
+<img id="home_img" src="{% static 'img/bg.jpeg' %}">
+
+<hr class="hr--clear">
+<div class="text-center">
+    <a href="{% url 'list_products_categories' 'all' %}" class="return-link">Go to BOOKS -></a>
+</div>
+
 {% endblock content %}

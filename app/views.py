@@ -11,9 +11,9 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse_lazy
-
+import json
 from braces import views
 
 
@@ -73,12 +73,24 @@ def product_details(request, param):
 
 def add_to_cart(request):
 	
-	if request.method == 'GET':
+	if request.is_ajax():
 		cart = request.session.get('cart', [])
-		product_id = str(request.GET['product_id'])
+		product_id = request.GET['product_id']
 		cart.append(product_id)
 		request.session['cart'] = cart
 
+		data = json.dumps(len(request.session['cart']))
+		return HttpResponse(data, content_type='application/json')
+	else:
+		raise Http404
+
+	return HttpResponseRedirect(request.path)
+
+def clear_cart(request):
+
+	if request.method == 'GET':
+		request.session['cart'] = []
+			
 	return HttpResponseRedirect(request.path)
 
 
