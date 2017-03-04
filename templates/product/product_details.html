@@ -21,13 +21,15 @@ $(document).ready(function() {
     $("#AddToCart").click(function() {
         var id;
         id = $(this).attr("product_id");
+        // var div = $('#dropdown').html();
         $.ajax({
             type: "GET",
             url: "{% url 'add_to_cart' %}",
             data: {'product_id': id},
 
             success: function(data){
-                $('#NumItems').html(data);
+                 //$('#NumItems').html(data);
+                $('#CartItems').load(location.href+" #CartItems>*", "");
             }
         });
     });

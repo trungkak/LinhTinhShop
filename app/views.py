@@ -88,10 +88,12 @@ def add_to_cart(request):
 
 def clear_cart(request):
 
-	if request.method == 'GET':
+	if request.is_ajax():
 		request.session['cart'] = []
-			
-	return HttpResponseRedirect(request.path)
+		data = json.dumps(len(request.session['cart']))
+		return HttpResponse(data, content_type='application/json')
+	else:
+		raise Http404
 
 
 class SignUpView(

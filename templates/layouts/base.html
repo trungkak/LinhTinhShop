@@ -23,14 +23,19 @@
 
         $(document).ready(function() {
 
-            $("#clear_cart").click(function() {
-                v$.get(
-                    "{% url 'clear_cart' %}", 
-                    {},
-                    function(data) {
-
-                    });
-            });
+            // $("#ClearCart").click(function() {
+            //     v$.ajax({
+            //         type: "GET",
+            //         url: "{% url 'clear_cart' %}", 
+            //         data: {},
+            //         success: function(data) {
+            //             $('#CartItems').load(location.href+" #CartItems>*", "");
+            //             alert("SUCCESS");
+            //         }
+            //         error: function(){
+            //             alert("ERROR");
+            //         }
+            // });
         })
 
     </script>
@@ -102,11 +107,13 @@
                 </ul>
 
             </div>
-            <div class="collapse navbar-collapse" id="navbar">
+            <div class="collapse navbar-collapse" id="CartItems">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"></i> Items <span class="badge" id="NumItems" > {{ num_items }} </span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            Items <span class="badge" id="NumItems" > {{ num_items }} </span></a>
                     
                         <ul class="dropdown-menu" role="menu">
                             <!-- <li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> sayfası <span class="badge">Video</span> sayfasında etiketlendi</a></li>
@@ -116,14 +123,14 @@
 
                             {% for obj in objs %}
 
-                                <li><a href="{% url 'product_details' obj.get_absolute_url %}"></i> <img id="cart_img" src="/{{obj.photo.url}}"><!-- <span class="badge">1</span> --> {{ obj.name }} </a></li>
+                                <li><a href="{% url 'product_details' obj.get_absolute_url %}"><img id="cart_img" src="/{{obj.photo.url}}"><!-- <span class="badge">1</span> --> {{ obj.name }} </a></li>
 
                             {% endfor %}
 
                             <li class="divider"></li>
-                            <li><a href="#"></i> Checkout </a></li>
-                            <li class="divider"></li>
-                            <li><a href=""></i> Clear cart </a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Checkout </a></li>
+                            <!-- <li class="divider"></li>
+                            <li><a href="#" id="ClearCart" >Clear cart </a></li> -->
                         </ul>
                     </li>
                     
@@ -139,7 +146,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {{user.username}} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Profile</a></li>
-                                <li><a href="#">Cart</a></li>
+                                <li><a href="#">Purchase history</a></li>
                                 <li class="divider"></li>
                                 <li><a href="{% url 'logout' %}">Logout</a></li>
                             </ul>
