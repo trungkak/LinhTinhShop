@@ -13,8 +13,11 @@ class Product(models.Model):
 	slug = models.SlugField(max_length=150, blank=True)
 	price_in_vnd = models.DecimalField(max_digits=8, decimal_places=2)
 
-	manufacturer = models.CharField(max_length=100, blank=True)
+	author = models.CharField(max_length=100, default='')
 	description = models.TextField()
+
+	quantity = models.IntegerField(default=1)
+	num_pages = models.IntegerField(default=100)
 
 	photo = models.ImageField(upload_to='static/img/book_photos', blank=True)
 	pub_date = models.DateTimeField(default=datetime.now)
@@ -32,9 +35,8 @@ class Product(models.Model):
 		self.slug = slugify(self.name)
 		super(Product, self).save(*args, **kwargs)
 
-	# def get_object_attr(self, pk, attr):
-	# 	obj_attr = getattr(self.objects.get(pk=int(pk)), attr)
-	# 	return obj_attr
+	class Meta:
+		ordering = ['-pub_date']
 
 class Category(models.Model):
 	name = models.CharField(max_length=100)
@@ -59,17 +61,24 @@ class Category(models.Model):
 		self.slug = slugify(self.name)
 		super(Category, self).save(*args, **kwargs)
 
+	class Meta:
+		verbose_name_plural = "Categories"
+
 class Comment(models.Model):
 	title = models.CharField(max_length=100)
 	content = models.TextField()
 	product = models.ForeignKey('Product', related_name='product')
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user', null=True)
+	pub_date = models.DateTimeField(default=datetime.now)
 
 	def get_absolute_url(self):
 		return self.product.get_absolute_url + '/comments/' + str(self.id)
 
 	def __unicode__(self):
 		return self.title
+
+	class Meta:
+		ordering = ['-pub_date']
 
 
 
