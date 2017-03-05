@@ -20,13 +20,14 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^home/$', views.home, name='home'),
+    url(r'^contact/$', views.contact_us, name="contact_us"),
     url(r'^products/category/(?P<param>[\s\S]+)/$', views.list_products_categories ,name='list_products_categories'),
     url(r'^products/(?P<param>[\s\S]+)/$', views.product_details, name='product_details'),
     url(r'^accounts/register/$', views.SignUpView.as_view(), name='register'),
     url(r'^accounts/login/$', views.LoginView.as_view(), name='login'),
     url(r'^accounts/logout/$', views.logout_view, name='logout'),
     url(r'^testview/$', views.test_view, name='testview'),
-    #url(r'^markdown/', django_markdown.urls),
+    url(r'^cart/$', views.cart, name='cart'),
     url(r'^cart/add/$', views.add_to_cart, name='add_to_cart'),
-    url(r'^cart/clear/$', views.clear_cart, name='clear_cart'),
+    url(r'^cart/remove/$', views.remove_cart, name='remove_cart'),
 ]

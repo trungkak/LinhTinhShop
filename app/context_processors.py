@@ -9,7 +9,6 @@ def session_url(request):
     objs = []
 
     for item in sess:
-    	# name = getattr(Product.objects.get(pk=item), 'name')
     	obj = Product.objects.get(pk=item)
     	objs.append(obj)
 

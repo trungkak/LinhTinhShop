@@ -3,10 +3,27 @@
 
 {% block js %}
 
-<script src="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/fastclick.min.js?4775145912400741764" type="text/javascript"></script>
-  <script src="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/timber.js?4775145912400741764" type="text/javascript"></script>
-  <script src="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/theme.js?4775145912400741764" type="text/javascript"></script>
-<script src="//cdn.shopify.com/s/files/1/0880/2454/t/2/assets/modernizr.min.js?4775145912400741764" type="text/javascript"></script>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+
+			$('.RemoveCart').click(function(){
+				var id;
+				id = $(this).attr("product_id");
+				$.ajax({
+		            type: "GET",
+		            url: "{% url 'remove_cart' %}",
+		            data: {'product_id': id},
+
+		            success: function(data){
+		                location.reload();
+		            }
+		        });
+			})
+
+		});
+
+	</script>
 
 {% endblock js %}
 
@@ -54,9 +71,9 @@
                                             </a>
                                         </div>
                                         <div class="grid__item two-thirds">
-                                            <a href="/products/gisele-freund-photographer-by-christian-caujolle-gisele-freund-et-al?variant=26961636803" class="h4 cart__product-name"> {{obj.name}} - {{obj.author}} </a>
+                                            <a href="{% url 'product_details' obj.get_absolute_url %}" class="h4 cart__product-name"> {{obj.name}} - {{obj.author}} </a>
                                             <p class="cart__product-meta">
-                                                <a href="/cart/change?line=1&amp;quantity=0">Remove</a>
+                                                <a class="RemoveCart" href="javascript:void(0)" product_id="{{obj.id}}">Remove</a>
                                             </p>
                                         </div>
                                     </div>

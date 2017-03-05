@@ -23,11 +23,33 @@ def test_view(request):
 	return render(request, template, {})
 
 def home(request):
-	num = len(request.session.get('cart', {}))
 
 	template='layouts/home.html'
 
 	return render(request, template, {})
+
+def contact_us(request):
+	template = 'layouts/contactus.html'
+
+	return render(request, template, {})
+
+def cart(request):
+	template = 'layouts/cart.html'
+
+	return render(request, template, {})
+
+def remove_cart(request):
+
+	if request.is_ajax():
+		cart = request.session.get('cart',[])
+		product_id = request.GET['product_id']
+		cart.remove(product_id)
+		request.session['cart'] = cart
+		data = json.dumps(len(request.session['cart']))
+		return HttpResponse(data, content_type='application/json')
+	else:
+		raise Http404
+
 
 def list_products_categories(request, param):
 
@@ -85,16 +107,6 @@ def add_to_cart(request):
 		raise Http404
 
 	return HttpResponseRedirect(request.path)
-
-def clear_cart(request):
-
-	if request.is_ajax():
-		request.session['cart'] = []
-		data = json.dumps(len(request.session['cart']))
-		return HttpResponse(data, content_type='application/json')
-	else:
-		raise Http404
-
 
 class SignUpView(
 	views.AnonymousRequiredMixin,
