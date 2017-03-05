@@ -19,17 +19,18 @@ $(document).ready(function() {
     })
 
     $("#AddToCart").click(function() {
-        var id;
-        id = $(this).attr("product_id");
-        $.ajax({
-            type: "GET",
-            url: "{% url 'add_to_cart' %}",
-            data: {'product_id': id},
+            var id;
+            id = $(this).attr("product_id");
+            $.ajax({
+                type: "GET",
+                url: "{% url 'add_to_cart' %}",
+                data: {'product_id': id},
 
-            success: function(data){
-                $('#CartItems').load(location.href+" #CartItems>*", "");
-            }
-        });
+                success: function(data){
+                    $('#CartItems').load(location.href+" #CartItems>*", "");
+                    location.reload();
+                }
+            });
     });
 })
 </script>
@@ -94,13 +95,15 @@ $(document).ready(function() {
                 <link itemprop="availability" href="http://schema.org/InStock">
 
                 <div class="product-single__add-to-cart">
+                {% if clickable %}
                     <button id="AddToCart" class="btn" product_id="{{product.id}}">
                         <span id="AddToCartText">Add to Cart</span>
                     </button>
-    
+                {% else %}
+                    <strong><span class="bold-blue">ADDED</span></strong>
+                {% endif %}
                 </div>
 
-                <!-- </form> -->
             </div>
             <div class="product-single__description rte" itemprop="description">
                 <p>

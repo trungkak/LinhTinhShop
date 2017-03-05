@@ -36,7 +36,15 @@ def contact_us(request):
 def cart(request):
 	template = 'layouts/cart.html'
 
-	return render(request, template, {})
+	cart = request.session.get('cart',[])
+
+	sub_total = 0
+
+	for product_id in cart:
+		product = Product.objects.get(pk=product_id)
+		sub_total += product.price_in_vnd
+
+	return render(request, template, {'sub_total' : sub_total})
 
 def remove_cart(request):
 
@@ -50,6 +58,17 @@ def remove_cart(request):
 	else:
 		raise Http404
 
+def update_cart(request):
+
+	if request.is_ajax():
+		cart = request.session.get('cart',[])
+		product_id = request.GET['product_id']
+		cart.remove(product_id)
+		request.session['cart'] = cart
+		data = json.dumps(len(request.session['cart']))
+		return HttpResponse(data, content_type='application/json')
+	else:
+		raise Http404
 
 def list_products_categories(request, param):
 
@@ -82,6 +101,15 @@ def product_details(request, param):
 
 	comments = product.get_comments()
 
+	cart = request.session.get('cart',[])
+
+	clickable = True
+
+	if id in cart:
+		clickable = False
+	else:
+		clickable = True
+
 	form = CommentForm(request.POST)
 	if form.is_valid():
 		comment = form.save(commit=False)
@@ -90,7 +118,7 @@ def product_details(request, param):
 	else:
 		form = CommentForm()
 
-	context = {'product' : product, 'comments' : comments, 'form' : form}
+	context = {'product' : product, 'comments' : comments, 'form' : form, 'clickable' : clickable}
 	return render(request, template, context)
 
 def add_to_cart(request):
